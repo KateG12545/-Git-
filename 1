@@ -1,0 +1,239 @@
+// =============================================
+// Переменные
+// =============================================
+
+// Цвета
+$color-primary: #3498db;
+$color-secondary: #2ecc71;
+$color-danger: #e74c3c;
+$color-light: #ecf0f1;
+$color-dark: #2c3e50;
+
+// Шрифты
+$font-main: 'Roboto', sans-serif;
+$font-heading: 'Montserrat', sans-serif;
+
+// Отступы
+$spacing-unit: 8px;
+$spacing-small: $spacing-unit * 2; // 16px
+$spacing-medium: $spacing-unit * 4; // 32px
+$spacing-large: $spacing-unit * 6; // 48px
+
+// Тени
+$shadow-default: 0 2px 4px rgba(0, 0, 0, 0.1);
+$shadow-large: 0 4px 8px rgba(0, 0, 0, 0.15);
+
+// =============================================
+// Миксины (примеси)
+// =============================================
+
+// Центрирование элементов
+@mixin center($direction: both) {
+  position: absolute;
+  
+  @if $direction == both {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  } @else if $direction == horizontal {
+    left: 50%;
+    transform: translateX(-50%);
+  } @else if $direction == vertical {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+// Тень с параметрами
+@mixin shadow($size: 'default', $color: rgba(0, 0, 0, 0.1)) {
+  @if $size == 'default' {
+    box-shadow: $shadow-default;
+  } @else if $size == 'large' {
+    box-shadow: $shadow-large;
+  } @else {
+    box-shadow: 0 $size $size * 2 $color;
+  }
+}
+
+// Создание кнопки с параметрами
+@mixin button($bg-color: $color-primary, $text-color: white, $width: auto) {
+  display: inline-block;
+  padding: $spacing-small $spacing-medium;
+  background-color: $bg-color;
+  color: $text-color;
+  border: none;
+  border-radius: 4px;
+  font-family: $font-main;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  width: $width;
+  
+  &:hover {
+    background-color: darken($bg-color, 10%);
+  }
+}
+
+// =============================================
+// Стили с использованием BEM
+// =============================================
+
+// Блок: Карточка
+.card {
+  @include shadow('large');
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: white;
+  margin-bottom: $spacing-medium;
+  
+  // Элемент: Заголовок карточки
+  &__header {
+    padding: $spacing-medium;
+    background-color: $color-primary;
+    color: white;
+    font-family: $font-heading;
+    font-size: 20px;
+  }
+  
+  // Элемент: Тело карточки
+  &__body {
+    padding: $spacing-medium;
+  }
+  
+  // Элемент: Футер карточки
+  &__footer {
+    padding: $spacing-small $spacing-medium;
+    border-top: 1px solid $color-light;
+    background-color: lighten($color-light, 5%);
+  }
+  
+  // Модификатор: Карточка с акцентом
+  &--accent {
+    border-top: 4px solid $color-secondary;
+    
+    .card__header {
+      background-color: $color-secondary;
+    }
+  }
+  
+  // Модификатор: Опасная карточка
+  &--danger {
+    border-top: 4px solid $color-danger;
+    
+    .card__header {
+      background-color: $color-danger;
+    }
+  }
+}
+
+// Блок: Кнопка
+.btn {
+  @include button;
+  
+  // Модификатор: Вторичная кнопка
+  &--secondary {
+    @include button($color-secondary);
+  }
+  
+  // Модификатор: Опасная кнопка
+  &--danger {
+    @include button($color-danger);
+  }
+  
+  // Модификатор: Широкая кнопка
+  &--wide {
+    width: 100%;
+  }
+  
+  // Модификатор: Маленькая кнопка
+  &--small {
+    padding: $spacing-unit $spacing-small;
+    font-size: 14px;
+  }
+}
+
+// Блок: Навигационное меню
+.nav {
+  display: flex;
+  background-color: $color-dark;
+  padding: 0 $spacing-medium;
+  
+  // Элемент: Пункт меню
+  &__item {
+    padding: $spacing-small $spacing-medium;
+    
+    // Модификатор: Активный пункт меню
+    &--active {
+      background-color: $color-primary;
+    }
+  }
+  
+  // Элемент: Ссылка в меню
+  &__link {
+    color: white;
+    text-decoration: none;
+    font-family: $font-main;
+    
+    &:hover {
+      color: $color-light;
+    }
+  }
+}
+
+// =============================================
+// Глобальные стили
+// =============================================
+
+body {
+  font-family: $font-main;
+  color: $color-dark;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: $color-light;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-medium;
+}
+
+// Сетка с использованием миксина
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -$spacing-small;
+  
+  &__item {
+    flex: 1 0 calc(33.333% - #{$spacing-small * 2});
+    margin: $spacing-small;
+    min-width: 250px;
+  }
+}
+
+// Адаптивный миксин
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == 'phone' {
+    @media (max-width: 600px) { @content; }
+  } @else if $breakpoint == 'tablet' {
+    @media (max-width: 900px) { @content; }
+  } @else if $breakpoint == 'desktop' {
+    @media (min-width: 901px) { @content; }
+  }
+}
+
+// Использование адаптивного миксина
+.header {
+  padding: $spacing-large;
+  
+  @include respond-to('tablet') {
+    padding: $spacing-medium;
+  }
+  
+  @include respond-to('phone') {
+    padding: $spacing-small;
+  }
+}
