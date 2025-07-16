@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пример псевдоклассов и псевдоэлементов</title>
+    <style>
+        /* Базовые стили */
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        /* Стили для кнопки с :hover */
+        .my-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .my-button:hover {
+            background-color: #45a049;
+            color: #ffeb3b;
+        }
+        
+        /* Стили для input с :focus */
+        .my-input {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+            margin: 10px 0;
+        }
+        
+        .my-input:focus {
+            border-color: #4CAF50;
+            outline: none;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+        
+        /* Стили для списка с :nth-child */
+        .my-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .my-list li {
+            padding: 10px;
+            margin: 5px 0;
+        }
+        
+        .my-list li:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+        
+        .my-list li:nth-child(even) {
+            background-color: #e6e6e6;
+        }
+        
+        /* Псевдоэлементы для заголовков и параграфов */
+        h1::before {
+            content: "★ ";
+            color: #4CAF50;
+        }
+        
+        h2::before {
+            content: "➤ ";
+            color: #2196F3;
+        }
+        
+        p::after {
+            content: " ❦";
+            color: #9E9E9E;
+            font-size: 0.8em;
+        }
+        
+        /* Стилизация placeholder */
+        .my-input::placeholder {
+            color: #9E9E9E;
+            font-style: italic;
+            font-size: 0.9em;
+        }
+        
+        /* Сложный селектор с комбинацией псевдоклассов и псевдоэлементов */
+        .special-list li:not(.exclude):hover::after {
+            content: " ← наведено!";
+            color: #FF5722;
+            font-weight: bold;
+        }
+        
+        /* Декоративные элементы с псевдоэлементами */
+        .decorative-box {
+            position: relative;
+            padding: 20px;
+            margin: 30px 0;
+            background-color: #f8f8f8;
+            border-radius: 5px;
+        }
+        
+        .decorative-box::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: #4CAF50;
+            border-radius: 5px 0 0 5px;
+        }
+        
+        .decorative-box::after {
+            content: "✧";
+            position: absolute;
+            bottom: -15px;
+            right: 20px;
+            font-size: 24px;
+            color: #2196F3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Пример использования псевдоклассов</h1>
+    
+    <h2>Кнопка с эффектом при наведении (:hover)</h2>
+    <button class="my-button">Наведи на меня</button>
+    
+    <h2>Поле ввода с эффектом при фокусе (:focus)</h2>
+    <input type="text" class="my-input" placeholder="Введите текст...">
+    
+    <h2>Список с чередованием стилей (:nth-child)</h2>
+    <ul class="my-list">
+        <li>Первый элемент</li>
+        <li>Второй элемент</li>
+        <li>Третий элемент</li>
+        <li>Четвертый элемент</li>
+        <li>Пятый элемент</li>
+    </ul>
+    
+    <h2>Список с исключением элементов (:not) и эффектом при наведении</h2>
+    <ul class="special-list">
+        <li>Обычный элемент</li>
+        <li class="exclude">Исключенный элемент</li>
+        <li>Обычный элемент</li>
+        <li class="exclude">Исключенный элемент</li>
+        <li>Обычный элемент</li>
+    </ul>
+    
+    <h2>Псевдоэлементы ::before и ::after</h2>
+    <p>Этот параграф имеет декоративный элемент после текста.</p>
+    <p>Еще один пример параграфа с псевдоэлементом.</p>
+    
+    <div class="decorative-box">
+        <h2>Декоративные псевдоэлементы</h2>
+        <p>Этот блок имеет зеленую полосу слева (::before) и декоративный элемент внизу справа (::after), созданные исключительно с помощью CSS.</p>
+    </div>
+</body>
+</html>
